@@ -61,12 +61,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build_job, lint_job]
 
-    steps:
-      - name: Setup Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: 3.11
-
+    steps:      
       - name: Setup Databricks CLI
         run: databricks/setup-cli@main
         
