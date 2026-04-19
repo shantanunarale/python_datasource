@@ -67,11 +67,18 @@ jobs:
         with:
           python-version: 3.11
 
+      - name: Setup Databricks CLI
+        run: microsoft/install-databricks-cli@v1.0.0
+        
       - name: Download Artifact
         uses: actions/download-artifact@v8
         with:
           name: source_and_wheel
 
-      - name: List Contents
-        run: ls
+      - name: Get Contents
+        run: |
+          cd ..
+          ls -la
+      
+      
         
