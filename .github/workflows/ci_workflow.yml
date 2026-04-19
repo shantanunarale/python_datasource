@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  lint_job:
+  build_job:
     runs-on: ubuntu-latest
 
     steps:
@@ -31,10 +31,11 @@ jobs:
           restore-cache: "true"
           activate-environment: "true"
 
-      - name: setup ruff
-        uses: astral-sh/ruff-action@v3
-        with:
-          args: "--version"
+      - name: Build        
+        run: uv build
 
-      - name: run lint
-        run: ruff check --output-format github --select PL,E,F,N --config ruff.toml
+      - name: Upload Source and Wheel
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: source_and_wheel
+          path: dist
