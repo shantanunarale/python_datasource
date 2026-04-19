@@ -56,3 +56,22 @@ jobs:
         with:
           name: source_and_wheel
           path: dist
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build_job, lint_job]
+
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version-file: "pyproject.toml"
+
+      - name: Download Artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: source_and_wheel
+
+      - name: List Contents
+        run: ls
+        
