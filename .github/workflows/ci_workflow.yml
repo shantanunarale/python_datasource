@@ -23,7 +23,8 @@ jobs:
       - name: Setup uv
         uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b
         with:
-          version-file: "pyproject.toml"
+          version: '0.11.7'
+          # version-file: "pyproject.toml"
           # working-directory: $GITHUB_WORKSPACE
           enable-cache: "true"
           cache-dependency-glob: '**/pyproject.toml'
