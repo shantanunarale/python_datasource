@@ -1,6 +1,7 @@
 from pyspark.sql.datasource import DataSource, DataSourceReader
 from pyspark.sql.types import StructType
 import faker as f
+import os
 
 class SimpleReader(DataSourceReader):
 
