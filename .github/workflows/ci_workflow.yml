@@ -60,7 +60,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: [build_job, lint_job]
-
+    environment: dev      
+    
     steps:  
       - name: setup python
         uses: actions/setup-python@v6.1.0
@@ -75,10 +76,17 @@ jobs:
         with:
           name: source_and_wheel
 
-      - name: Get Contents
+      - name: Setup config
         run: |
-          cd ..
-          ls -la
+          cat <<EOF>> ~/.databrickscfg
+          [DEFAULT]
+          host      =       %{{ secrets.HOST }}
+          client_id = ${{ secrets.CLIENT_ID }}          
+          client_secret = ${{ secrets.CLIENT_SECRET }}
+          EOF
+
+      - name: Deploy Wheel
+        run: databricks fs cp *.whl dbfs:/Volumes/python_datasource/my_schema/binary --overwrite 
       
       
         
