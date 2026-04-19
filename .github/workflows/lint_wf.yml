@@ -22,7 +22,4 @@ jobs:
           python-version-file: "pyproject.toml"
 
       - name: Lint Code        
-        uses: astral-sh/ruff-action@v4.0.0
-        with:
-          # Arguments passed to Ruff. Use `ruff --help` to see available options. Defaults to `check`.
-          args: "--config=ruff.toml"                
+        uses: astral-sh/ruff-action@v4.0.0            
