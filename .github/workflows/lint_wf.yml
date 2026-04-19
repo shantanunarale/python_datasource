@@ -7,6 +7,8 @@ on:
       - reopened
     branches:
       - main
+    paths-ignore:
+      - .github/**
 
 jobs:
   lint_code:
