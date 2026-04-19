@@ -4,3 +4,6 @@ line-length = 60
 quote-style = "double"
 indent-style = "tab"
 docstring-code-format = true
+
+[lint]
+select = ['F', 'PL', 'E', 'N']
