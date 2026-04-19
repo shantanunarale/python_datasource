@@ -1,10 +1,6 @@
 from pyspark.sql.datasource import DataSource, DataSourceReader
 from pyspark.sql.types import StructType
-import faker as f
-import os
-
-
-     
+import faker as f    
 
 class SimpleReader(DataSourceReader):
 
@@ -13,7 +9,6 @@ class SimpleReader(DataSourceReader):
         self.options = options
 
     def read(self, partition):
-        new_variable = 59
         fake = f.Faker('en_IN')
         number_of_rows = int(self.options.get('number_of_rows', 100))
         for i in range(number_of_rows):

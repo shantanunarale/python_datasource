@@ -1,0 +1,39 @@
+name: lint_wf
+on:
+  workflow_dispatch: 
+  pull_request:
+    types: 
+      - opened
+      - reopened
+    branches:
+      - main
+
+jobs:
+  lint_code:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6.0.2
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version-file: "pyproject.toml"
+
+      - name: Lint Code
+        id: linter
+        uses: astral-sh/ruff-action@v4.0.0            
+
+      - name: Pick Failure Results
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        id: pick_failure
+        if: failure() && steps.linter.outcome == 'failure'
+        run: |
+          ruff check --output-format=full . > ruff_report.txt || true
+          echo "### Ruff Linter Report" > final_comment.txt
+          echo '```' >> final_comment.txt
+          cat ruff_report.txt >> final_comment.txt
+          echo '```' >> final_comment.txt
+          gh pr comment ${{ github.event.pull_request.number }} --body-file final_comment.txt
