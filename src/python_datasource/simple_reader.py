@@ -1,12 +1,8 @@
 from pyspark.sql.datasource import DataSource, DataSourceReader
 from pyspark.sql.types import StructType
-import faker as f
-import os
+import faker as f    
 
-
-     
-
-class SimpleReader(DataSourceReader):
+class simple_reader(DataSourceReader):
 
     def __init__(self, schema, options):
         self.schema = schema
@@ -19,7 +15,7 @@ class SimpleReader(DataSourceReader):
         for i in range(number_of_rows):
             yield(i, fake.first_name(), fake.last_name())
 
-class SimpleSource(DataSource):
+class simple_source(DataSource):
     @classmethod
     def name(cls):
         return "simple"
@@ -28,4 +24,4 @@ class SimpleSource(DataSource):
         return 'id int, first_name string, last_name string'
     
     def reader(self, schema: StructType):
-        return SimpleReader(schema, self.options)
+        return simple_reader(schema, self.options)
