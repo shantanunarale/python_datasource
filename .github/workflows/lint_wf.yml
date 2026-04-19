@@ -1,0 +1,26 @@
+name: lint_wf
+on:
+  workflow_dispatch: 
+  pull_request:
+    types: 
+      - opened
+      - reopened
+    branches:
+      - main
+
+jobs:
+  lint_code:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6.0.2
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version-file: "pyproject.toml"
+
+      - name: Lint Code
+        run: |
+          ruff check --output-format github --config '**/ruff.toml'
