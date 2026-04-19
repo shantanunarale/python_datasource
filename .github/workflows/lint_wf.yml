@@ -23,4 +23,4 @@ jobs:
 
       - name: Lint Code
         run: |
-          ruff check --output-format github --config '**/ruff.toml'
+          ruff check --output-format=github --config='**/ruff.toml'
