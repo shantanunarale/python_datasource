@@ -33,4 +33,8 @@ jobs:
       - name: setup ruff
         uses: astral-sh/ruff-action@v3
         with:
-          src: $GITHUB_WORKSPACE
+          args: "--version"
+
+      - name: run lint
+        run: ruff check
+        working-directory: $GITHUB_WORKSPACE
