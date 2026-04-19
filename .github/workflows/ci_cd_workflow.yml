@@ -1,4 +1,4 @@
-name: ci_workflow
+name: ci_cd_workflow
 on:
   push:
     branches:
@@ -9,7 +9,7 @@ on:
 
 jobs:
   lint_job:
-    runs-on: ubuntu-latest    
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v6.0.2
@@ -22,10 +22,10 @@ jobs:
       - name: Lint Code
         id: linter
         uses: astral-sh/ruff-action@v4.0.0
-        
+
   build_job:
     runs-on: ubuntu-latest
-    needs: [lint_job]
+    needs: [ lint_job ]
     if: success() && needs.lint_job.result == 'success'
 
     steps:
@@ -48,7 +48,7 @@ jobs:
           restore-cache: "true"
           activate-environment: "true"
 
-      - name: Build        
+      - name: Build
         run: uv build
 
       - name: Upload Source and Wheel
@@ -59,19 +59,21 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [build_job, lint_job]
-    environment: dev      
+    needs: [ build_job, lint_job ]
+    environment: dev
     if: success() && needs.build_job.result == 'success'
-    
-    steps:  
+
+    steps:
       - name: setup python
         uses: actions/setup-python@v6.1.0
         with:
           python-version: 3.11
 
       - name: Install Databricks CLI
-        run: curl -fsSL https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh | sh
-        
+        run: curl -fsSL
+          https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh
+          | sh
+
       - name: Download Artifact
         uses: actions/download-artifact@v8
         with:
@@ -87,7 +89,4 @@ jobs:
           EOF
 
       - name: Deploy Wheel
-        run: databricks fs cp *.whl ${{ vars.UPLOAD_PATH }} --overwrite 
-      
-      
-        
+        run: databricks fs cp *.whl ${{ vars.UPLOAD_PATH }} --overwrite
