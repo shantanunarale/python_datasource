@@ -26,7 +26,7 @@ jobs:
           version-file: "pyproject.toml"
           working-directory: $GITHUB_WORKSPACE
           enable-cache: "true"
-          cache-dependency-glob: **/pyproject.toml
+          cache-dependency-glob: '**/pyproject.toml'
           restore-cache: "true"
           activate-environment: "true"
 
