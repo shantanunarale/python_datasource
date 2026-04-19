@@ -1,0 +1,40 @@
+name: ci_workflow
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - .github/**
+  workflow_dispatch:
+
+jobs:
+  lint_job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version-file: "pyproject.toml"
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b
+        with:
+          version-file: "pyproject.toml"
+          working-directory: $GITHUB_WORKSPACE
+          enable-cache: "true"
+          cache-dependency-glob: '**/pyproject.toml'
+          restore-cache: "true"
+          activate-environment: "true"
+
+      - name: setup ruff
+        uses: astral-sh/ruff-action@v3
+        with:
+          args: "--version"
+
+      - name: run lint
+        run: ruff check
+        working-directory: $GITHUB_WORKSPACE
