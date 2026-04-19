@@ -25,9 +25,8 @@ jobs:
         id: linter
         uses: astral-sh/ruff-action@v4.0.0            
 
-      - name: Post Comment
+      - name: Pick Failure Results
+        id: pick_failure
         if: failure() && steps.linter.outcome == 'failure'
-        uses: KeisukeYamashita/create-comment@v1        
-        with:
-          comment: |
-            ruff check --output-format=full
+        run: |
+           gh pr comment ${{ github.event.pull_request.number }} --body ${{ steps.linter.outputs.output }}
