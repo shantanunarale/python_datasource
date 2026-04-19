@@ -32,4 +32,5 @@ jobs:
 
       - name: setup ruff
         uses: astral-sh/ruff-action@v3
-        src: $GITHUB_WORKSPACE
+        with:
+          src: $GITHUB_WORKSPACE
