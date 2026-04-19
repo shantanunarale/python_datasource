@@ -26,6 +26,8 @@ jobs:
         uses: astral-sh/ruff-action@v4.0.0            
 
       - name: Pick Failure Results
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         id: pick_failure
         if: failure() && steps.linter.outcome == 'failure'
         run: |
