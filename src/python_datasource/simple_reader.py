@@ -23,4 +23,4 @@ class SimpleSource(DataSource):
         return 'id int, first_name string, last_name string'
     
     def reader(self, schema: StructType):
-        return simple_reader(schema, self.options)
+        return SimpleReader(schema, self.options)
