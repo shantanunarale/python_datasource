@@ -12,7 +12,7 @@ class SimpleReader(DataSourceReader):
         fake = f.Faker('en_IN')
         number_of_rows = int(self.options.get('number_of_rows', 100))
         for i in range(number_of_rows):
-            yield(i, fake.first_name(), fake.last_name())
+            yield(i+1, fake.first_name(), fake.last_name())
 
 class SimpleSource(DataSource):
     @classmethod
