@@ -1,3 +1,3 @@
-from python_datasource.SimpleReader import SimpleSource
+from python_datasource.simple_reader import SimpleSource
 
 __all__ = ["SimpleSource"]
